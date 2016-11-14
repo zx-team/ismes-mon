@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view name="mon_ssjk" title="设备实时监控"  onReady="ready">
+	
+	<bag name="data">
+		<item name="nodes" type="json" bind="nodes"/>
+		<item name="toolBtns" type="json" bind="toolBtns"/>
+		<item name="data" type="json"	bind="data"/>
+	</bag>
+	<bunch>
+		<button name="saveBtn" label="保存"  type="button" context="primary" onClick="saveBtnClick" ></button>
+		<button name="ssjkBtn" label="设备实时监控"  type="button" context="primary" onClick="openssjkModal"></button>
+		<mega name="sbxxTb" height="600" toolbtns="false" editable="false" />
+	</bunch>
+	<modal name="ssjkModal" heading="设备实时监控" sizing="huge" show="false" keyboard="true" onHide="ssjkModalOnHide" >
+		<modal-body>
+			<bunch layoutconstraint="md:6;sm:6;">
+				<bunch layoutconstraint="md:6;sm:6;">
+					<label for="sbbh" text="设备编号:" layoutconstraint="md:6;sm:6"/>
+								<plaintext name="sbbh"  layoutconstraint="md:6;sm:6"/>
+					<image shape="thumbnail" name="image_sb" popshow="true" src="" width="100" height="150" layoutconstraint="md:12;sm:12">
+					</image>
+					<label for="sbph" text="设备牌号:" layoutconstraint="md:6;sm:6"/>
+								<plaintext name="sbph"  layoutconstraint="md:6;sm:6"/>
+				</bunch>
+				<bunch layoutconstraint="md:6;sm:6;">
+					<panel  heading="设备实时状态" >
+						<panel-body>
+							<plaintext  text="设备状态" layoutconstraint="md:4;sm:4"/>
+							<image shape="thumbnail" name="image_sbzt" popshow="true" src="" width="100" height="150" layoutconstraint="md:4;sm:4">
+							</image>
+							<plaintext  text="空闲" name ="sbztdmname" layoutconstraint="md:4;sm:4"/>
+						</panel-body>
+					</panel>
+					<bunch layoutconstraint="md:4">
+						<chartgauge name="chart_zzzs" sizing="mini" 
+							chartname="test"
+							title="主轴转数"
+							axislinestyle="color:[[0.3,'green'],[0.71,'#63869e'],[1,'red']]"
+							detail="{value}"
+							max="14000"
+							min="0"
+						>
+						</chartgauge>
+					</bunch>
+					<bunch layoutconstraint="md:4">
+						<chartgauge name="chart_zzfz" sizing="mini" 
+							chartname="test"
+							title="主轴负载"
+							axislinestyle="color:[[0.3,'green'],[0.8,'#63869e'],[1,'red']]"
+							detail="{value}%"
+							max="100"
+							min="0"
+						>
+						</chartgauge>
+					</bunch>
+					<bunch layoutconstraint="md:4">
+						<chartgauge name="chart_zzjg" sizing="mini" 
+							chartname="test"
+							title="主轴进给"
+							axislinestyle="color:[[0.3,'green'],[0.83,'#63869e'],[1,'red']]"
+							detail="{value}"
+							max="12000"
+							min="0"
+						>
+						</chartgauge>
+					</bunch>
+				</bunch>
+					<bunch layoutconstraint="md:6;sm:6;">
+						<panel  heading="运行时间统计" >
+							<panel-body>
+								<label for="ljyx" text="累计运行时间:" layoutconstraint="md:6;sm:6"/>
+								<plaintext name="ljyx"  layoutconstraint="md:6;sm:6"/>
+								<label for="ljkx" text="累计空闲时间:" layoutconstraint="md:6;sm:6"/>
+								<plaintext name="ljkx"  layoutconstraint="md:6;sm:6"/>
+								<label for="ljgz" text="累计故障时间:" layoutconstraint="md:6;sm:6"/>
+								<plaintext  name="ljgz"  layoutconstraint="md:6;sm:6"/>
+								<label for="ljtj" text="累计停机时间:" layoutconstraint="md:6;sm:6"/>
+								<plaintext  name="ljtj"  layoutconstraint="md:6;sm:6"/>
+							</panel-body>
+						</panel>
+						<panel heading="故障信息" >
+							<panel-body>
+								<label for="gzm" text="故障码:" layoutconstraint="md:6;sm:6"/>
+								<plaintext name = "gzm" text="无"  layoutconstraint="md:6;sm:6"/>
+								<label for="gznr" text="故障内容:"  layoutconstraint="md:6;sm:6"/>
+								<plaintext name="gznr" text="无"  layoutconstraint="md:6;sm:6"/>
+								<label for="gzfssj" text="故障发生时间:" layoutconstraint="md:6;sm:6"/>
+								<plaintext name="gzfssj" text="无"  layoutconstraint="md:6;sm:6"/>
+							</panel-body>
+						</panel>
+					</bunch>
+					<bunch layoutconstraint="md:6;sm:6;">
+						<panel  heading="工单信息" >
+							<panel-body>
+								<label for="scrwbh" text="生产任务编号:" layoutconstraint="md:6;sm:6"/>
+								<plaintext name="scrwbh" text="无"  layoutconstraint="md:6;sm:6"/>
+								<label for="pcbh" text="批次号:" layoutconstraint="md:6;sm:6"/>
+								<plaintext name="pcbh" text="无"  layoutconstraint="md:6;sm:6"/>
+								<label for="gdbh" text="工单号:" layoutconstraint="md:6;sm:6"/>
+								<plaintext name="gdbh" text="无"  layoutconstraint="md:6;sm:6"/>
+								<label for="ljmc" text="加工工件名称:" layoutconstraint="md:6;sm:6"/>
+								<plaintext name="ljmc" text="无"  layoutconstraint="md:6;sm:6"/>
+								<label for="jgsl" text="工单计划:" layoutconstraint="md:6;sm:6"/>
+								<plaintext name="jgsl" text="无"  layoutconstraint="md:6;sm:6"/>
+								<label for="jgkssj" text="开始加工时间:" layoutconstraint="md:6;sm:6"/>
+								<plaintext name="jgkssj" text="无"  layoutconstraint="md:6;sm:6" format="YYYY-MM-dd HH:mm:ss"/>
+								<label for="gdywcsl" text="已完成:" layoutconstraint="md:6;sm:6"/>
+								<plaintext name="gdywcsl" text="无"  layoutconstraint="md:6;sm:6"/>
+								<label for="wcjd" text="完成/计划:" layoutconstraint="md:6;sm:6"/>
+								<progressbar name="wcjd" label="" showLabel="true" sizing="small"/>
+							</panel-body>
+						</panel>
+					</bunch>
+			</bunch>
+			<bunch layoutconstraint="md:6;sm:6;">
+					<bunch layoutconstraint="md:3">
+						<chartgauge name="chart_tj" sizing="xsmall" 
+							chartname="test"
+							title="停机时间"
+							axislinestyle="color:[[0.3,'green'],[0.5,'#63869e'],[1,'red']]"
+							detail="{value}"
+							max="24"
+							min="0"
+							showtooltip="false"
+						>
+						</chartgauge>
+					</bunch>
+					<bunch layoutconstraint="md:3">
+						<chartgauge name="chart_yx" sizing="xsmall" 
+							chartname="test"
+							title="运行时间"
+							axislinestyle="color:[[0.3,'green'],[0.5,'#63869e'],[1,'red']]"
+							detail="{value}"
+							max="24"
+							min="0"
+							showtooltip="false"
+						>
+						</chartgauge>
+					</bunch>
+					<bunch layoutconstraint="md:3">
+						<chartgauge name="chart_gz" sizing="xsmall" 
+							chartname="test"
+							title="故障时间"
+							axislinestyle="color:[[0.3,'green'],[0.5,'#63869e'],[1,'red']]"
+							detail="{value}"
+							max="24"
+							min="0"
+							showtooltip="false"
+						>
+						</chartgauge>
+					</bunch>
+					<bunch layoutconstraint="md:3">
+						<chartgauge name="chart_kx" sizing="xsmall" 
+							chartname="test"
+							title="空闲时间"
+							axislinestyle="color:[[0.3,'green'],[0.5,'#63869e'],[1,'red']]"
+							detail="{value}"
+							max="24"
+							min="0"
+							showtooltip="false"
+						>
+						</chartgauge>
+					</bunch>
+					<bunch layoutconstraint="md:12;sm:12;">
+						<chartbar
+							name="stack_bar_demo"
+							title="运行时间统计"
+							showlegend="false"
+						showtooltip="false"
+							xaxistype="time"
+							yaxistype="category"
+							width="500"
+							height="300"
+						>
+							<attribute name="yaxisdata">
+								<![CDATA[ 
+									['停机','报警','运行','空闲','总图']
+								]]>
+							</attribute>
+						</chartbar>
+					</bunch>
+				<table name="table_tjxx" scroll="false"  multiselect="false"  url="/ssjk/table_tjxx"  layoutconstraint="md:12;sm:12;" >
+					<column label="状态ID" name="id" key="true" hidden="true"></column>
+					<column label="停机原因" name="tjyy"></column>
+					<column label="停机开始时间" name="ztkssj" type="date"></column>
+					<column label="停机结束时间" name="ztjssj" type="date"></column>
+					<column label="停机时长" name="tjsj"></column>
+				</table>
+			</bunch>
+		</modal-body>
+		<modal-footer>
+			<button name="closessjkModalBtn" label="关闭" type="button" onClick="closessjkModal"></button>
+		</modal-footer>
+	</modal>
+	<attribute name="javascript">
+	<![CDATA[
+		var mega = ui.mega("sbxxTb");
+		function ready() {
+			mega.setNodes(ui.bag("data").get("nodes"));
+			mega.setToolBtns(ui.bag("data").get("toolBtns"));
+			mega.loadData(ui.bag("data").get("data"));
+		}
+		
+		function rftable() {
+	    	ui.table("table_tjxx").search({sbid:1});
+			$.ajax({
+	             type: "POST",
+	             url:  ui.getRealUrl("/ssjk/query_sbssjk"),
+	             async: false,
+	             data: {gdbh:1,sbid:1},
+	             success: function(data){
+	             	if('false'!=data)
+	             	{
+	             		$('#scrwbh').html(data.scrwbh);
+	             		$('#pcbh').html(data.pcbh);
+	             		$('#gdbh').html(data.gdbh);
+	             		$('#ljmc').html(data.ljmc);
+	             		$('#jgsl').html(data.jgsl);
+	             		$('#jgkssj').html(data.jgkssj);
+	             		$('#gdywcsl').html(data.gdywcsl);
+	             		ui.progressbar('wcjd').percent(data.wcjd);
+	             		$('#ljyx').html(data.ljyx+'小时');
+	             		$('#ljkx').html(data.ljkx+'小时');
+	             		$('#ljgz').html(data.ljgz+'小时');
+	             		$('#ljtj').html(data.ljtj+'小时');
+	             		ui.image("image_sb").attr("src",data.url);
+	             		$('#sbbh').html(data.sbbh);
+	             		$('#sbph').html(data.sbph);
+	             		$('#gzm').html(data.gzm);
+	             		$('#gzfssj').html(data.gzfssj);
+	             		ui.image("image_sbzt").attr("src",data.sbztdmurl);
+	             		$('#sbztdmname').html(data.sbztdmname);
+	             		
+						ui.chartgauge("chart_zzzs").refreshData(data.zzzsz_s);	             		
+						ui.chartgauge("chart_zzfz").refreshData(data.zzfzz);	             		
+						ui.chartgauge("chart_zzjg").refreshData(data.zjsdz_f);
+							             		
+						ui.chartgauge("chart_yx").refreshData(data.ljyx);	             		
+						ui.chartgauge("chart_kx").refreshData(data.ljkx);	             		
+						ui.chartgauge("chart_gz").refreshData(data.ljgz);	             		
+						ui.chartgauge("chart_tj").refreshData(data.ljtj);	             		
+	             		var chardatalist = [];
+	             		for (var i=0;i<data.ljsj_zzt.length;i++)
+						{
+							var chardataRow = {};
+							var ljsj_zt = [];
+		             		var row_ljsj10 = {};
+		             		var row_ljsj20 = {};
+		             		var row_ljsj30 = {};
+		             		var row_ljsj40 = {};
+		             		var row_ljsj = {};
+							row_ljsj10.value = new Date(data.ljsj_zzt[i].value);
+							row_ljsj20.value = new Date(data.ljsj_zzt[i].value);
+							row_ljsj30.value = new Date(data.ljsj_zzt[i].value);
+							row_ljsj40.value = new Date(data.ljsj_zzt[i].value);
+							row_ljsj.value =new Date(data.ljsj_zzt[i].value);
+							if('10'==data.ljsj_zzt[i].sbztdm)//空闲
+							{
+								row_ljsj10.itemStyle = itemStyleMap.idle;
+								row_ljsj20.itemStyle = itemStyleMap.other;
+								row_ljsj30.itemStyle = itemStyleMap.other;
+								row_ljsj40.itemStyle = itemStyleMap.other;
+								row_ljsj.itemStyle = itemStyleMap.idle;
+							}else if('20'==data.ljsj_zzt[i].sbztdm){
+								row_ljsj10.itemStyle = itemStyleMap.other;
+								row_ljsj20.itemStyle = itemStyleMap.running;
+								row_ljsj30.itemStyle = itemStyleMap.other;
+								row_ljsj40.itemStyle = itemStyleMap.other;
+								row_ljsj.itemStyle = itemStyleMap.running;
+							}else if('30'==data.ljsj_zzt[i].sbztdm){
+								row_ljsj10.itemStyle = itemStyleMap.other;
+								row_ljsj20.itemStyle = itemStyleMap.other;
+								row_ljsj30.itemStyle = itemStyleMap.alarm;
+								row_ljsj40.itemStyle = itemStyleMap.other;
+								row_ljsj.itemStyle = itemStyleMap.alarm;
+							}else if('40'==data.ljsj_zzt[i].sbztdm){
+								row_ljsj10.itemStyle = itemStyleMap.other;
+								row_ljsj20.itemStyle = itemStyleMap.other;
+								row_ljsj30.itemStyle = itemStyleMap.other;
+								row_ljsj40.itemStyle = itemStyleMap.stopped;
+								row_ljsj.itemStyle = itemStyleMap.stopped;
+							}
+							
+							ljsj_zt.push(row_ljsj40);
+							ljsj_zt.push(row_ljsj30);
+							ljsj_zt.push(row_ljsj20);
+							ljsj_zt.push(row_ljsj10);
+							ljsj_zt.push(row_ljsj);
+							chardataRow.type = 'bar';
+							chardataRow.stack = 'ljsj';
+							chardataRow.data = ljsj_zt;
+							chardataRow.barWidth="50%";
+							chardatalist.push(chardataRow);
+						}
+	             		ui.chartbar("stack_bar_demo").refreshData(chardatalist);
+	             	}else{
+	             		ui.warn("未查询到工单信息!", "提示!");
+	             	}
+	             }
+	         });
+	    }
+		var iCount;
+		function openssjkModal() {
+			rftable();
+	      	iCount = setInterval(rftable, 1000);
+	    	ui.modal("ssjkModal").show();
+	    }
+		function ssjkModalOnHide() {
+			clearInterval(iCount);
+	    }
+	    
+	    
+	    function closessjkModal() {
+	    	ui.modal("ssjkModal").hide();
+	    }
+	    
+	    
+	    
+	    var labelStyle = {
+                normal:{
+                    show:true,
+                    position:"top"
+                }
+		};
+		var statusColorMap = {
+			running:"green",
+			stopped:"orange",
+			idle:"blue",
+			alarm:"red",
+			other:"rgba(0,0,0,0)"
+		};
+		
+		var itemStyleMap = {
+			running:{
+						normal:{
+							color:statusColorMap.running
+						}
+					},
+			stopped:{
+						normal:{
+							color:statusColorMap.stopped
+						}
+					},
+			idle:{
+						normal:{
+							color:statusColorMap.idle
+						}
+					},
+			alarm:{
+						normal:{
+							color:statusColorMap.alarm
+						}
+					},
+			other:{
+						
+		                normal:{
+		                    barBorderColor:statusColorMap.other,
+		                    color:statusColorMap.other
+		                },
+		                emphasis:{
+		                    barBorderColor:statusColorMap.other,
+		                    color:statusColorMap.other
+		                }
+						
+					},
+			
+		};
+	]]>
+	</attribute>
+</view>

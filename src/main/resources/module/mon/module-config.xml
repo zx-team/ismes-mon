@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module name="mon" version="1.0.0" category="system">
+	<information>
+		<name>EQUIPMENT MANAGEMENT</name>
+		<vendor>
+			<name>Isesol isMES</name>
+			<url>http://www.isesol.com/</url>
+		</vendor>
+		<description>This module is developement for Real-time Inquiry.</description>
+		<license>AGPL</license>
+	</information>
+	<activities>
+		<activity name="ssjk" dialect="java" roles="MANUFACTURING_MANAGEMENT_ROLE" class="com.isesol.mes.ismes.mon.activity.SsjkActivity"/>
+	</activities>
+	<roles>
+		<role name="MANUFACTURING_MANAGEMENT_ROLE" label="生产管理人员_监控管理" description="生产管理相关" />
+	</roles>
+	<resources>
+		<resource name="sbztgz" fileName="sbztgz.png" shared="true" type="image" uri="/module/mon/resource/images/node/sbztgz.png"/>
+		<resource name="sbztkx" fileName="sbztkx.png" shared="true" type="image" uri="/module/mon/resource/images/node/sbztkx.png"/>
+		<resource name="sbzttj" fileName="sbzttj.png" shared="true" type="image" uri="/module/mon/resource/images/node/sbzttj.png"/>
+		<resource name="sbztyx" fileName="sbztyx.png" shared="true" type="image" uri="/module/mon/resource/images/node/sbztyx.png"/>
+	</resources>
+	<menus>
+		<!-- 现场监控（一级） -->
+		<category name="monitor_management" label="现场监控" icon="#f5c14f;Query_statistics"  weight="5"/>
+		<!-- <menu name="scxxsbjk_menu" label="设备监控" activity="ssjk" activity-method="query_ssjk"
+			 category="monitor_management" roles="MANUFACTURING_MANAGEMENT_ROLE" description="设备监控" icon="button" weight="20"/> -->
+	</menus>
+</module>
